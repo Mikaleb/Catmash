@@ -1,89 +1,94 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+    <v-col cols="6">
+      <vote-cat :picture="firstPicture.url" />
     </v-col>
+    <v-col cols="6">
+      <vote-cat :picture="secondPicture.url" />
+    </v-col>
+
+    <!-- reload -->
   </v-row>
 </template>
 
-<script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+<script lang="ts">
+import { defineComponent, toRefs, onMounted, reactive } from '@nuxtjs/composition-api'
+import useApi from '@/composables/use-api'
+import VoteCat from '@/components/VoteCat.vue'
 
-export default {
-  components: {
-    Logo,
-    VuetifyLogo
+export default defineComponent({
+  components: { VoteCat },
+  name: 'Index',
+  component: { VoteCat },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setup(props, ctx) {
+    const {
+      results,
+      fetching,
+      fetchResults
+    } = useApi()
+
+    const localState = reactive({
+      results: {},
+      firstPicture: { id: '', url: 'http://placekitten.com/200/300' },
+      secondPicture: { id: '', url: 'http://placekitten.com/200/300' },
+    })
+
+
+    const pickIdCategory = () => {
+      const randomNb = Math.floor(Math.random() * (99 - 0 + 1) + 0)
+      const apiResults: any = results.value
+      const randId: any = apiResults[randomNb]
+      console.log('🚀 ~ file: index.vue ~ line 35 ~ pickIdCategory ~ randId', randId)
+      return randId
+    }
+
+    onMounted(async () => {
+      await fetchResults('').then(() => {
+        localState.results = results.value
+        localState.firstPicture = pickIdCategory()
+        localState.secondPicture = pickIdCategory()
+
+        if (localState.firstPicture.id === localState.secondPicture.id) {
+          localState.firstPicture = pickIdCategory()
+        }
+      })
+
+
+    })
+    return {
+      ...toRefs(localState),
+      fetching,
+      results,
+      pickIdCategory
+    }
+  }
+})
+</script>
+
+<style lang="scss">
+#loading {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
   }
 }
-</script>
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+</style>
+
+
+
+
