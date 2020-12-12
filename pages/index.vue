@@ -1,14 +1,32 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="6">
-      <vote-cat :picture="firstPicture.url" />
-    </v-col>
-    <v-col cols="6">
-      <vote-cat :picture="secondPicture.url" />
-    </v-col>
+  <div class="flex items-center justify-center p-8">
+    <v-row justify="center" align="center" v-if="results">
+      <v-col cols="6">
+        <vote-cat :picture="firstPicture" v-if="!fetching" />
+        <template v-else>
+          <div class="flex items-center justify-center p-8">
+            <div id="loading"></div>
+          </div>
+        </template>
+      </v-col>
+      <v-col cols="6">
+        <!-- <vote-cat :picture="secondPicture" /> -->
+        <vote-cat :picture="secondPicture" v-if="!fetching" />
+        <template v-else>
+          <div class="flex items-center justify-center p-8">
+            <div id="loading"></div>
+          </div>
+        </template>
+      </v-col>
 
-    <!-- reload -->
-  </v-row>
+      <!-- reload -->
+    </v-row>
+    <template v-else>
+      <div class="flex items-center justify-center p-8">
+        <div id="loading"></div>
+      </div>
+    </template>
+  </div>
 </template>
 
 <script lang="ts">
@@ -36,18 +54,20 @@ export default defineComponent({
 
 
     const pickIdCategory = () => {
-      const randomNb = Math.floor(Math.random() * (99 - 0 + 1) + 0)
+      const randomNb: number = Math.floor(Math.random() * (99 - 0 + 1) + 0)
       const apiResults: any = results.value
-      const randId: any = apiResults[randomNb]
-      console.log('🚀 ~ file: index.vue ~ line 35 ~ pickIdCategory ~ randId', randId)
-      return randId
+      return apiResults[randomNb]
     }
 
     onMounted(async () => {
       await fetchResults('').then(() => {
         localState.results = results.value
         localState.firstPicture = pickIdCategory()
-        localState.secondPicture = pickIdCategory()
+        // localState.secondPicture = pickIdCategory()
+        localState.secondPicture = {
+          id: "37p",
+          url: "http://24.media.tumblr.com/tumblr_lw9hu39q621qdvbl3o1_1280.jpg"
+        }
 
         if (localState.firstPicture.id === localState.secondPicture.id) {
           localState.firstPicture = pickIdCategory()
