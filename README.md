@@ -1,4 +1,8 @@
-# catmash
+# Catmash
+
+## Exercise
+
+Since the API only handle a get parameter, we're going to store the data locally.
 
 ## Build Setup
 
