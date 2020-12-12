@@ -29,13 +29,17 @@ export default {
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/composition-api',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
   ],
+
+  proxy: [process.env.NUXT_ENV_API_URL],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {},
@@ -61,4 +65,8 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
+  generate: {
+    // choose to suit your project
+    interval: 2000,
+  },
 }
