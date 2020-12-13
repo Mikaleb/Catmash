@@ -4,6 +4,7 @@ import {
   toRefs,
   SetupContext,
   computed,
+  ref,
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
 
@@ -20,27 +21,20 @@ export default function useApi() {
     fetching: false,
   })
 
-  const globalState = reactive({
-    results: {},
-  })
+  const results = ref({})
 
-  const fetchResults = async (id: string) => {
+  const fetchResults = async () => {
     apiState.fetching = true
-    const { data } = await axios.get(`/data/cats.json`, {
-      params: {
-        id: id,
-      },
-    })
-    globalState.results = data.images
+    const { data } = await axios.get(`/data/cats.json`, {})
+    results.value = data.images
     apiState.fetching = false
 
-    return globalState.results
+    return results
   }
 
   return {
     ...toRefs(apiState),
-    ...toRefs(globalState),
-    results: computed(() => globalState.results),
+    results,
     fetchResults,
   }
 }
