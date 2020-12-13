@@ -6,7 +6,7 @@
         :class="{ 'cursor-pointer': hover }"
         @click="$emit('voted', propPictures.id)"
       >
-        <v-img max-height="500" max-width="500" contain :src="propPictures.url">
+        <v-img max-height="500" contain :src="propPictures.url">
           <div class="align-self-center">
             <v-btn :class="{ 'show-btns': hover }" color="transparent" icon>
               <v-icon :class="{ 'show-btns': hover }" color="transparent">

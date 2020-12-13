@@ -50,7 +50,6 @@ export default defineComponent({
     })
 
     const storageKey = 'votes'
-
     if (process.browser) {
       watch(
         () => appVotes.value,
@@ -69,10 +68,10 @@ export default defineComponent({
     }
 
 
-    const addCat = (data: any, id: string) => {
+    const addCat = (data: any, choice: apiData) => {
       data.push({
-        id: id,
-        // url: propPicture.value?.url,
+        id: choice?.id,
+        url: choice?.url,
         votes: 1
       })
       appVotes.value = data
@@ -80,15 +79,22 @@ export default defineComponent({
 
 
     const voting = (id: string) => {
+
+      let apiCat: apiData = {
+        id: '', url: ''
+      }
+
+      if (propApiData.value?.length) {
+        //@ts-ignore
+        apiCat = propApiData.value.find((vote: apiData) => vote.id === id)
+      }
+
       // checking our localStorage
-      console.log(appVotes.value.length)
       if (appVotes.value.length) {
-        console.log('no vote found, adding it to localStorage')
         if (!appVotes.value.find((vote: apiData) => vote.id === id)) {
-          addCat(appVotes.value, id)
+          addCat(appVotes.value, apiCat)
         }
         else {
-          console.log('a local vote was already made, +1')
           const addedVote = appVotes.value.map((vote: any) => {
             if (vote.id == id) {
               vote.votes = vote.votes + 1
@@ -99,15 +105,12 @@ export default defineComponent({
         }
       }
       else {
-        console.log('appvotes is EMPTY')
-        addCat(appVotes.value, id)
+        addCat(appVotes.value, apiCat)
       }
-      // reload data
 
+      // reload data
       localState.data.splice(0, 1, pickIdCategory())
       localState.data.splice(1, 1, pickIdCategory())
-
-      console.log('_____END')
     }
 
     onMounted(async () => {
