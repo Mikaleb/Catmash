@@ -1,15 +1,22 @@
 <template>
-  <div class="flex items-center justify-center p-8">
-    <vote-machine
-      v-if="apiResults"
-      :pictures="pictures"
-      :apiData="apiResults"
-    />
-    <template v-else>
-      <div class="flex items-center justify-center p-8">
-        <div id="loading"></div>
-      </div>
-    </template>
+  <div>
+    <div class="flex items-center justify-center p-8">
+      <vote-machine
+        v-if="apiResults"
+        :pictures="pictures"
+        :apiData="apiResults"
+      />
+      <template v-else>
+        <div class="flex items-center justify-center p-8">
+          <div id="loading"></div>
+        </div>
+      </template>
+    </div>
+    <div class="flex items-center justify-center p-8">
+      <v-btn rounded color="primary" large dark href="/leaderboard">
+        Voir les plus beaux chats
+      </v-btn>
+    </div>
   </div>
 </template>
 
@@ -63,9 +70,8 @@ export default defineComponent({
           localState.firstPicture = pickIdCategory()
         } */
       })
-
-
     })
+
     return {
       ...toRefs(localState),
       fetching,

@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <div class="flex justify-center bg-white max-h-16">
-      <v-img src="logo.png" max-height="120" max-width="120" contain />
+    <div class="flex justify-center bg-white max-h-32">
+      <a href="/"><v-img src="logo.png" max-height="128" contain /></a>
     </div>
     <nuxt />
   </v-app>
