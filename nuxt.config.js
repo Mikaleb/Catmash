@@ -26,11 +26,16 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
+    '@aceforth/nuxt-netlify',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/composition-api',
   ],
+
+  netlify: {
+    mergeSecurityHeaders: true,
+  },
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
