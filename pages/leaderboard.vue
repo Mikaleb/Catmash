@@ -17,18 +17,19 @@
         </v-col>
       </v-row>
     </v-container>
-
-    <v-data-table
-      :headers="headers"
-      :items="champions.slice(3)"
-      :items-per-page="25"
-      :loading="!champions"
-      class="elevation-1"
-    >
-      <template v-slot:item.url="{ item }">
-        <v-img :src="item.url" max-width="250" contain> </v-img>
-      </template>
-    </v-data-table>
+    <div class="m-4">
+      <v-data-table
+        :headers="headers"
+        :items="champions.slice(3)"
+        :items-per-page="25"
+        :loading="!champions"
+        class="elevation-1"
+      >
+        <template v-slot:item.url="{ item }">
+          <v-img :src="item.url" max-width="250" contain> </v-img>
+        </template>
+      </v-data-table>
+    </div>
   </div>
 </template>
 

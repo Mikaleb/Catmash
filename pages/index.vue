@@ -13,7 +13,7 @@
       </template>
     </div>
     <div class="flex items-center justify-center p-8">
-      <v-btn rounded color="primary" large dark href="/leaderboard">
+      <v-btn rounded color="primary" x-large dark href="/leaderboard">
         Voir les plus beaux chats
       </v-btn>
     </div>
