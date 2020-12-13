@@ -1,6 +1,10 @@
 # Catmash
 
+[![Heroku App Status](http://heroku-shields.herokuapp.com/catmash-mikaleb)](https://catmash-mikaleb.herokuapp.com)
+
 ## Exercise
+
+A webapp that shows you two pictures of cats, you select one, data is saved locally. There is a dashboard to see the ones you voted the most.
 
 Since the API only handle a get parameter, we're going to store the data locally.
 
