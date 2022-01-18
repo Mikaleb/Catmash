@@ -117,7 +117,7 @@ export default defineComponent({
       appVotes.value = JSON.parse(localStorage.getItem(storageKey))
 
       await fetchResults().then((data) => {
-        console.log(data)
+        
         //@ts-ignore
         localState.apiResults = data.value
         setLeaderBoard()

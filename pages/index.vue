@@ -51,7 +51,7 @@ export default defineComponent({
 
     onMounted(async () => {
       await fetchResults().then((data) => {
-        console.log(data)
+        
         //@ts-ignore
         localState.apiResults = data.value
         localState.pictures[0] = pickIdCategory(data.value)
