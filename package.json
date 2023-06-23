@@ -18,7 +18,7 @@
     "@nuxtjs/composition-api": "^0.16.4",
     "@nuxtjs/proxy": "^2.0.1",
     "core-js": "^3.22.8",
-    "nuxt": "^2.15.8"
+    "nuxt": "^3.4.3"
   },
   "devDependencies": {
     "@aceforth/nuxt-netlify": "^1.1.0",
